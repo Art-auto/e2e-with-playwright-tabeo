@@ -21,8 +21,7 @@ Product information](https://qa-challenge-tabeo.vercel.app/) page is opened in a
 - User is logged in into the app after clicking the Magic link.
 
 ---
-
-## Email address field should be required
+## 2. Email address field should be required
 ```diff 
 + Medium priority
 ```
@@ -41,8 +40,7 @@ Product information](https://qa-challenge-tabeo.vercel.app/) page is opened in a
 - User remains not logged in.
 
 ---
-
-## Valid email should be used
+## 3. Valid email should be used
 ```diff 
 + Medium priority
 ```
@@ -62,7 +60,7 @@ Product information](https://qa-challenge-tabeo.vercel.app/) page is opened in a
 - User remains not logged in.
 
 ---
-## 2. Sign-up using Google Auth.
+## 4. Sign-up using Google Auth.
 ```diff 
 - High priority
 ```
@@ -81,7 +79,7 @@ Product information](https://qa-challenge-tabeo.vercel.app/) page is opened in a
 **Expected result**
 - The user is authenticated in the Tabeo app.
 ---
-## 3. Pay now flow - succeeded transaction.
+## 5. Pay now flow - succeeded transaction.
 ```diff 
 - High priority
 ```
@@ -103,8 +101,7 @@ Product information](https://qa-challenge-tabeo.vercel.app/) page is opened in a
 - User is redirected to the "Your purchase is ready to be downloaded." page.
 
 ---
-
-## 4. Pay monthly flow - succeeded transaction.
+## 6. Pay monthly flow - succeeded transaction.
 ```diff 
 - High priority
 ```
@@ -126,8 +123,7 @@ Product information](https://qa-challenge-tabeo.vercel.app/) page is opened in a
 - User is redirected to the "Your purchase is ready to be downloaded." page.
 
 ---
-
-## 5. Pay now flow - Failed transaction.
+## 7. Pay now flow - Failed transaction.
 ```diff 
 - High priority
 ```
@@ -147,8 +143,7 @@ Product information](https://qa-challenge-tabeo.vercel.app/) page is opened in a
 **Expected result**
 - An error is shown with the information that the card is declined.
 ---
-
-## TODO. Pay monthly flow - Failed transaction.
+## 8. Pay monthly flow - Failed transaction.
 ```diff 
 - High priority
 ```
@@ -168,7 +163,7 @@ Product information](https://qa-challenge-tabeo.vercel.app/) page is opened in a
 **Expected result**
 - An error is shown with the information that the card is declined.
 ---
-## 6. Returning users - Pay monthly flow.
+## 9. Returning users - Pay monthly flow.
 ```diff 
 - High priority
 ```
@@ -187,7 +182,7 @@ Product information](https://qa-challenge-tabeo.vercel.app/) page is opened in a
 - User is redirected back to the [Application UI Icon Pack](https://qa-challenge-tabeo.vercel.app/?canceled=true) page.
 - Payment is cancelled.
 ---
-## TODO. Returning users - Pay now flow.
+## 10. Returning users - Pay now flow.
 ```diff 
 - High priority
 ```
