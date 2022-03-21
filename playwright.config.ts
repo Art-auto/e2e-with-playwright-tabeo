@@ -39,6 +39,11 @@ const config: PlaywrightTestConfig = {
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    // video: 'on',
+    launchOptions: {
+      args: ["--disable-dev-shm-usage"],
+      ignoreDefaultArgs: ['--disable-component-extensions-with-background-pages']
+    },
   },
 
   /* Configure projects for major browsers */

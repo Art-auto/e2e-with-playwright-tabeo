@@ -6,6 +6,7 @@ export class SignInModal {
   readonly modalHeader: Locator
   readonly emailInput: Locator
   readonly signInWithEmailButton: Locator
+  readonly signInWithGoogleButton: Locator
 
   constructor(page: Page) {
     this.page = page
@@ -13,6 +14,7 @@ export class SignInModal {
     this.modalHeader = this.modal.locator('h3')
     this.emailInput = this.modal.locator('input[id=email]')
     this.signInWithEmailButton = this.modal.locator('button', { hasText: 'Sign in with email' })
+    this.signInWithGoogleButton = this.modal.locator('button', { hasText: 'Sign in with Google' })
   }
 
   async verifyOpened() {
@@ -32,6 +34,16 @@ export class SignInModal {
 
   async clickSignInWihEmailButton() {
     await this.signInWithEmailButton.click()
+  }
+
+  async clickSignInWihGoogleButton() {
+    await Promise.all([
+      // Waits for the next navigation.
+      // It is important to call waitForNavigation before click to set up waiting.
+      this.page.waitForNavigation(),
+      // Triggers a navigation after a timeout.
+      this.signInWithGoogleButton.click(),
+    ])
   }
 
 }
