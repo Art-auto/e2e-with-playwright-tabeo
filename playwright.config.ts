@@ -34,14 +34,25 @@ const config: PlaywrightTestConfig = {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
     actionTimeout: 0,
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'https://qa-challenge-tabeo.vercel.app/',
+    baseURL: process.env.BASE_URL,
     screenshot: 'only-on-failure',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     // video: 'on',
     launchOptions: {
-      args: ["--disable-dev-shm-usage"],
+      args: ["--disable-dev-shm-usage", 
+        "--disable-web-security", 
+        "--allow-running-insecure-content",
+        "--disable-extensions",
+        "--disable-popup-blocking",
+        "--ignore-certificate-errors",
+        "--disable-plugins-discovery",
+        "--incognito",
+        '--no-sandbox', 
+        '--disable-setuid-sandbox',
+        '--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36'
+      ],
       ignoreDefaultArgs: ['--disable-component-extensions-with-background-pages']
     },
   },

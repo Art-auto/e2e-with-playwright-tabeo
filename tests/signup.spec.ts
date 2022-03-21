@@ -31,8 +31,10 @@ test.describe('Application UI Icon Pack', () => {
     await iconPackPage.openSignupLink(text.links[0].href)
     await iconPackPage.verifyUserLoggedIn(testEmail)
   })
-  test.skip('Sign-up using Google Auth', async ({ page }) => {
-    // TODO find a way to bypass google security
+  test('Sign-up using Google Auth', async ({ page, browserName }) => {
+    test.skip(browserName === 'firefox', 'Still working on it')
+    test.skip(browserName === 'chromium', 'Still working on it')
+
     const iconPackPage = new IconPackPage(page)
     const signInModal = new SignInModal(page)
     const googleAuth = new GoogleAuth(page)
