@@ -11,9 +11,12 @@ export class StripePage {
   readonly cardNameInput: Locator
   readonly payButton: Locator
   readonly cardForSuccessPayment: string
+  readonly cardForFailedPayment: string
   readonly month: number
   readonly yearInFuture: number
   readonly CVCNumber: number
+  readonly cardInfoError: Locator
+  readonly backButton: Locator
 
   constructor(page: Page) {
     this.page = page
@@ -24,9 +27,12 @@ export class StripePage {
     this.cardCVCInput = page.locator('id=cardCvc')
     this.payButton = page.locator('.SubmitButton')
     this.cardForSuccessPayment = process.env.CARD_NUMBER_FOR_SUCCESS_PAYMENT
+    this.cardForFailedPayment = process.env.CARD_NUMBER_FOR_FAILED_PAYMENT
     this.month = generateRandomInteger(1, 12)
     this.yearInFuture = generateRandomInteger(25, 50)
     this.CVCNumber = generateRandomInteger(100, 999)
+    this.cardInfoError = page.locator('div[id="cardNumber-fieldset"] .FieldError span')
+    this.backButton = page.locator(`.Header-business a[href *= "${process.env.BASE_URL}"]`)
   }
 
   async verifyOpened() {
@@ -34,8 +40,18 @@ export class StripePage {
     await expect(this.paymentHeader).toHaveText('Pay with card')
   }
 
+  async verifyPaymentFailed() {
+    await expect(this.cardInfoError).toBeVisible()
+    await expect(this.cardInfoError).toHaveText('Your card has been declined.')
+  }
+
   async clickPayButton() {
     await this.payButton.click()
+  }
+
+  async clickBackButton() {
+    this.page.on('dialog', dialog => dialog.accept())
+    await this.backButton.click()
   }
 
   async typeCardNumber(cardNumber: string) {
@@ -67,5 +83,18 @@ export class StripePage {
     await this.typeCardName('Fname Lname')
     await this.clickPayButton()
     await securityModal.completeAuthentication()
+  }
+
+  async failPayment() {
+    const securityModal = new SecurityModal(this.page)
+
+    await this.verifyOpened()
+    await this.typeCardNumber(this.cardForFailedPayment)
+    await this.typeCardExpirationDate(this.month, this.yearInFuture)
+    await this.typeCVCNumber(this.CVCNumber)
+    await this.typeCardName('Fname Lname')
+    await this.clickPayButton()
+    await securityModal.completeAuthentication()
+    await this.verifyPaymentFailed()
   }
 }
