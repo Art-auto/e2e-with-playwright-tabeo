@@ -62,7 +62,10 @@ export class StripePage {
     await expect(this.cardNumberInput).toHaveValue(cardNumber)
   }
 
-  async typeCardExpirationDate(day: number, month: number) {
+  async typeCardExpirationDate(day: number | string, month: number) {
+    if (day === 1) {
+      day = '01'
+    }
     await this.cardExpirationDateInput.fill(`${day}${month}`)
   }
 

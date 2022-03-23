@@ -11,7 +11,7 @@ const mailosaurApiKey = MailosaurConfig.apiKey
 const testEmail = `${new Date().getTime()}@${mailosaurServerDomain}`
 
 test.describe('Application UI Icon Pack', () => {
-  test.beforeAll( async ({browser}) => {
+  test.beforeAll( async ({browser, browserName}) => {
     const context = await browser.newContext()
     let page = await context.newPage()
     const iconPackPage = new IconPackPage(page)
@@ -31,15 +31,12 @@ test.describe('Application UI Icon Pack', () => {
       // ---------------------------------------------------
       await iconPackPage.openSignupLink(text.links[0].href)
       await iconPackPage.verifyUserLoggedIn(testEmail)
-      await context.storageState({ path: 'state.json' })
+      await context.storageState({ path: `${browserName}_state.json` })
       await page.close()
-  })
-  test.afterAll(async ({ browser }) => {
-    browser.close
   })
   test('Pay now flow - succeeded transaction', async ({ browser, browserName }) => {
     test.skip(browserName === 'webkit', 'Need to solve a problem with navigation')
-    const context = await browser.newContext({ storageState: 'state.json' })
+    const context = await browser.newContext({ storageState: `${browserName}_state.json` })
     const page = await context.newPage()
     const iconPackPage = new IconPackPage(page)
     const stripePage = new StripePage(page)
@@ -53,7 +50,7 @@ test.describe('Application UI Icon Pack', () => {
   })
   test('Pay monthly flow - succeeded transaction', async ({ browser, browserName }) => {
     test.skip(browserName === 'webkit', 'Need to solve a problem with navigation')
-    const context = await browser.newContext({ storageState: 'state.json' })
+    const context = await browser.newContext({ storageState: `${browserName}_state.json` })
     const page = await context.newPage()
     const iconPackPage = new IconPackPage(page)
     const stripePage = new StripePage(page)
@@ -68,7 +65,7 @@ test.describe('Application UI Icon Pack', () => {
   test('Pay now flow - Failed transaction.', async ({ playwright, browserName }) => {
     test.skip(browserName === 'webkit', 'Need to solve a problem with navigation')
     const browser = await playwright[browserName].launch()
-    const context = await browser.newContext({ storageState: 'state.json' })
+    const context = await browser.newContext({ storageState: `${browserName}_state.json` })
     const page = await context.newPage()
     const iconPackPage = new IconPackPage(page)
     const stripePage = new StripePage(page)
@@ -84,7 +81,7 @@ test.describe('Application UI Icon Pack', () => {
   test('Pay monthly flow - Failed transaction', async ({ playwright, browserName }) => {
     test.skip(browserName === 'webkit', 'Need to solve a problem with navigation')
     const browser = await playwright[browserName].launch()
-    const context = await browser.newContext({ storageState: 'state.json' })
+    const context = await browser.newContext({ storageState: `${browserName}_state.json` })
     const page = await context.newPage()
     const iconPackPage = new IconPackPage(page)
     const stripePage = new StripePage(page)
@@ -99,7 +96,7 @@ test.describe('Application UI Icon Pack', () => {
   })
   test('Returning users - Pay monthly flow', async ({ browser, browserName }) => {
     test.skip(browserName === 'webkit', 'Need to solve a problem with navigation')
-    const context = await browser.newContext({ storageState: 'state.json' })
+    const context = await browser.newContext({ storageState: `${browserName}_state.json` })
     const page = await context.newPage()
     const iconPackPage = new IconPackPage(page)
     const stripePage = new StripePage(page)
@@ -114,7 +111,7 @@ test.describe('Application UI Icon Pack', () => {
   })
   test('Returning users - Pay now flow', async ({ browser, browserName }) => {
     test.skip(browserName === 'webkit', 'Need to solve a problem with navigation')
-    const context = await browser.newContext({ storageState: 'state.json' })
+    const context = await browser.newContext({ storageState: `${browserName}_state.json` })
     const page = await context.newPage()
     const iconPackPage = new IconPackPage(page)
     const stripePage = new StripePage(page)
