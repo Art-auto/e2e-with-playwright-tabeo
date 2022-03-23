@@ -76,4 +76,18 @@ test.describe('Application UI Icon Pack', () => {
     await stripePage.clickBackButton()
     await iconPackPage.verifyUserLoggedIn(testEmail)  // on the success payment page there is no user email shown
   })
+  test('Pay monthly flow - Failed transaction', async ({ browser, browserName }) => {
+    test.skip(browserName === 'webkit', 'Need to solve a problem with navigation')
+    const context = await browser.newContext({ storageState: 'state.json' })
+    const page = await context.newPage()
+    const iconPackPage = new IconPackPage(page)
+    const stripePage = new StripePage(page)
+
+    await iconPackPage.open()
+    await iconPackPage.verifyUserLoggedIn(testEmail)
+    await iconPackPage.clickPayMonthlyButton()
+    await stripePage.failPayment()
+    await stripePage.clickBackButton()
+    await iconPackPage.verifyUserLoggedIn(testEmail)  // on the success payment page there is no user email shown
+  })
 })
