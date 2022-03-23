@@ -8,31 +8,34 @@ import MailosaurConfig from '../fixtures/mailosaurConfig'
 const mailosaurServerId = MailosaurConfig.serverId
 const mailosaurServerDomain = MailosaurConfig.serverDomain
 const mailosaurApiKey = MailosaurConfig.apiKey
-const testEmail = `${new Date().getTime()}@${mailosaurServerDomain}`
 
 test.describe('Application UI Icon Pack', () => {
+  let testEmail
+
   test.beforeAll( async ({browser, browserName}) => {
+
+    testEmail = `${new Date().getTime()}${browserName}@${mailosaurServerDomain}`
     const context = await browser.newContext()
     let page = await context.newPage()
     const iconPackPage = new IconPackPage(page)
-      const signInModal = new SignInModal(page)
-      const mailosaur = new Mailosaur(mailosaurApiKey)
-      // TODO make API request to get MagicLink generated
-      // Another possible solution is to seed into database access token with long life time for testing
-      await iconPackPage.open()
-      await iconPackPage.clickSignup()
-      await signInModal.verifyOpened()
-      await signInModal.typeEmail(testEmail)
-      await signInModal.clickSignInWihEmailButton()
-      await signInModal.verifyEmailSent()
-      const {text} = await mailosaur.messages.get(mailosaurServerId, {
-        sentTo: testEmail
-      })
-      // ---------------------------------------------------
-      await iconPackPage.openSignupLink(text.links[0].href)
-      await iconPackPage.verifyUserLoggedIn(testEmail)
-      await context.storageState({ path: `${browserName}_state.json` })
-      await page.close()
+    const signInModal = new SignInModal(page)
+    const mailosaur = new Mailosaur(mailosaurApiKey)
+    // TODO make API request to get MagicLink generated
+    // Another possible solution is to seed into database access token with long life time for testing
+    await iconPackPage.open()
+    await iconPackPage.clickSignup()
+    await signInModal.verifyOpened()
+    await signInModal.typeEmail(testEmail)
+    await signInModal.clickSignInWihEmailButton()
+    await signInModal.verifyEmailSent()
+    const {text} = await mailosaur.messages.get(mailosaurServerId, {
+      sentTo: testEmail
+    })
+    // ---------------------------------------------------
+    await iconPackPage.openSignupLink(text.links[0].href)
+    await iconPackPage.verifyUserLoggedIn(testEmail)
+    await context.storageState({ path: `${browserName}_state.json` })
+    await page.close()
   })
   test('Pay now flow - succeeded transaction', async ({ browser, browserName }) => {
     const context = await browser.newContext({ storageState: `${browserName}_state.json` })
