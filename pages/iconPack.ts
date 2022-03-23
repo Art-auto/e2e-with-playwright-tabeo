@@ -7,6 +7,7 @@ export class IconPackPage {
   readonly payNowButton: Locator
   readonly payMonthlyButton: Locator
   readonly purchaseTitle: Locator
+  readonly baseUrl: string
 
   constructor(page: Page) {
     this.page = page
@@ -15,6 +16,7 @@ export class IconPackPage {
     this.payNowButton = page.locator('button', { hasText: 'Pay £220'})
     this.payMonthlyButton = page.locator('button', { hasText: 'Pay £20/mo'})
     this.purchaseTitle = page.locator('p', { hasText: 'Your purchase is ready to be downloaded.'})
+    this.baseUrl = process.env.BASE_URL
   }
 
   async open() {
@@ -46,6 +48,12 @@ export class IconPackPage {
   async verifyUserLoggedIn(userEmail: string) {
     await expect(this.signupButton).not.toBeVisible()
     await expect(this.emailSpan).toHaveText(userEmail)
+  }
+
+  async verifyPaymentCancelled(userEmail: string) {
+    await this.verifyUserLoggedIn(userEmail)
+    await this.page.waitForURL(`${this.baseUrl}?canceled=true`)
+    await expect(this.purchaseTitle).not.toBeVisible()
   }
 
   async verifyPurchaseSuccess() {

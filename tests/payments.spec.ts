@@ -32,7 +32,7 @@ test.beforeAll(async ({browser}) => {
     await iconPackPage.verifyUserLoggedIn(testEmail)
     await context.storageState({ path: 'state.json' })
     await page.close()
-});
+})
 
 test.describe('Application UI Icon Pack', () => {
 
@@ -48,6 +48,7 @@ test.describe('Application UI Icon Pack', () => {
     await iconPackPage.clickPayNowButton()
     await stripePage.completePayment()
     await iconPackPage.verifyPurchaseSuccess()
+    await page.close()
   })
   test('Pay monthly flow - succeeded transaction', async ({ browser, browserName }) => {
     test.skip(browserName === 'webkit', 'Need to solve a problem with navigation')
@@ -61,6 +62,7 @@ test.describe('Application UI Icon Pack', () => {
     await iconPackPage.clickPayMonthlyButton()
     await stripePage.completePayment()
     await iconPackPage.verifyPurchaseSuccess()
+    await page.close()
   })
   test('Pay now flow - Failed transaction.', async ({ browser, browserName }) => {
     test.skip(browserName === 'webkit', 'Need to solve a problem with navigation')
@@ -74,7 +76,8 @@ test.describe('Application UI Icon Pack', () => {
     await iconPackPage.clickPayNowButton()
     await stripePage.failPayment()
     await stripePage.clickBackButton()
-    await iconPackPage.verifyUserLoggedIn(testEmail)  // on the success payment page there is no user email shown
+    await iconPackPage.verifyPaymentCancelled(testEmail)
+    await page.close()
   })
   test('Pay monthly flow - Failed transaction', async ({ browser, browserName }) => {
     test.skip(browserName === 'webkit', 'Need to solve a problem with navigation')
@@ -88,6 +91,22 @@ test.describe('Application UI Icon Pack', () => {
     await iconPackPage.clickPayMonthlyButton()
     await stripePage.failPayment()
     await stripePage.clickBackButton()
-    await iconPackPage.verifyUserLoggedIn(testEmail)  // on the success payment page there is no user email shown
+    await iconPackPage.verifyPaymentCancelled(testEmail)
+    await page.close()
+  })
+  test('Returning users - Pay monthly flow', async ({ browser, browserName }) => {
+    test.skip(browserName === 'webkit', 'Need to solve a problem with navigation')
+    const context = await browser.newContext({ storageState: 'state.json' })
+    const page = await context.newPage()
+    const iconPackPage = new IconPackPage(page)
+    const stripePage = new StripePage(page)
+
+    await iconPackPage.open()
+    await iconPackPage.verifyUserLoggedIn(testEmail)
+    await iconPackPage.clickPayMonthlyButton()
+    await stripePage.verifyOpened()
+    await stripePage.clickBackButton()
+    await iconPackPage.verifyPaymentCancelled(testEmail)
+    await page.close()
   })
 })

@@ -46,11 +46,14 @@ export class StripePage {
   }
 
   async clickPayButton() {
-    await this.payButton.click()
+    await this.payButton.click({ timeout: 10 * 1000})
   }
 
   async clickBackButton() {
-    this.page.on('dialog', dialog => dialog.accept())
+    this.page.on('dialog', async (dialog) => {
+      console.log(dialog.message())
+      await dialog.dismiss()
+    })
     await this.backButton.click()
   }
 
