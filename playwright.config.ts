@@ -19,7 +19,7 @@ const config: PlaywrightTestConfig = {
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 5000
+    timeout: 10000
   },
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
@@ -48,7 +48,6 @@ const config: PlaywrightTestConfig = {
         "--disable-popup-blocking",
         "--ignore-certificate-errors",
         "--disable-plugins-discovery",
-        "--incognito",
         '--no-sandbox', 
         '--disable-setuid-sandbox',
         '--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36'

@@ -64,8 +64,9 @@ test.describe('Application UI Icon Pack', () => {
     await iconPackPage.verifyPurchaseSuccess()
     await page.close()
   })
-  test('Pay now flow - Failed transaction.', async ({ browser, browserName }) => {
+  test('Pay now flow - Failed transaction.', async ({ playwright, browserName }) => {
     test.skip(browserName === 'webkit', 'Need to solve a problem with navigation')
+    const browser = await playwright[browserName].launch()
     const context = await browser.newContext({ storageState: 'state.json' })
     const page = await context.newPage()
     const iconPackPage = new IconPackPage(page)
@@ -77,10 +78,11 @@ test.describe('Application UI Icon Pack', () => {
     await stripePage.failPayment()
     await stripePage.clickBackButton()
     await iconPackPage.verifyPaymentCancelled(testEmail)
-    await page.close()
+    await browser.close()
   })
-  test('Pay monthly flow - Failed transaction', async ({ browser, browserName }) => {
+  test('Pay monthly flow - Failed transaction', async ({ playwright, browserName }) => {
     test.skip(browserName === 'webkit', 'Need to solve a problem with navigation')
+    const browser = await playwright[browserName].launch()
     const context = await browser.newContext({ storageState: 'state.json' })
     const page = await context.newPage()
     const iconPackPage = new IconPackPage(page)
@@ -92,7 +94,7 @@ test.describe('Application UI Icon Pack', () => {
     await stripePage.failPayment()
     await stripePage.clickBackButton()
     await iconPackPage.verifyPaymentCancelled(testEmail)
-    await page.close()
+    await browser.close()
   })
   test('Returning users - Pay monthly flow', async ({ browser, browserName }) => {
     test.skip(browserName === 'webkit', 'Need to solve a problem with navigation')

@@ -52,7 +52,7 @@ export class StripePage {
   async clickBackButton() {
     this.page.on('dialog', async (dialog) => {
       console.log(dialog.message())
-      await dialog.dismiss()
+      await dialog.accept()
     })
     await this.backButton.click()
   }
