@@ -32,8 +32,8 @@ test.describe('Application UI Icon Pack', () => {
     await iconPackPage.verifyUserLoggedIn(testEmail)
   })
   test('Sign-up using Google Auth', async ({ page, browserName }) => {
-    test.skip(browserName === 'firefox', 'Still working on it')
-    test.skip(browserName === 'chromium', 'Still working on it')
+    test.skip(browserName === 'firefox', 'Need to investigate how to bypass google security')
+    test.skip(browserName === 'chromium', 'Need to investigate how to bypass google security')
 
     const iconPackPage = new IconPackPage(page)
     const signInModal = new SignInModal(page)
