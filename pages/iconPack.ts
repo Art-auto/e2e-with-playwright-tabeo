@@ -32,17 +32,13 @@ export class IconPackPage {
   }
 
   async clickPayNowButton () {
-    await Promise.all([
-      this.page.waitForNavigation(),
-      this.payNowButton.click()
-    ])
+    await this.payNowButton.click()
+    await this.page.waitForURL(/checkout\.stripe\.com\/pay\//)
   }
 
   async clickPayMonthlyButton () {
-    await Promise.all([
-      this.page.waitForNavigation(),
-      this.payMonthlyButton.click()
-    ])
+    await this.payMonthlyButton.click()
+    await this.page.waitForURL(/checkout\.stripe\.com\/pay\//)
   }
 
   async verifyUserLoggedIn(userEmail: string) {

@@ -35,7 +35,6 @@ test.describe('Application UI Icon Pack', () => {
       await page.close()
   })
   test('Pay now flow - succeeded transaction', async ({ browser, browserName }) => {
-    test.skip(browserName === 'webkit', 'Need to solve a problem with navigation')
     const context = await browser.newContext({ storageState: `${browserName}_state.json` })
     const page = await context.newPage()
     const iconPackPage = new IconPackPage(page)
@@ -49,7 +48,6 @@ test.describe('Application UI Icon Pack', () => {
     await page.close()
   })
   test('Pay monthly flow - succeeded transaction', async ({ browser, browserName }) => {
-    test.skip(browserName === 'webkit', 'Need to solve a problem with navigation')
     const context = await browser.newContext({ storageState: `${browserName}_state.json` })
     const page = await context.newPage()
     const iconPackPage = new IconPackPage(page)
@@ -63,7 +61,6 @@ test.describe('Application UI Icon Pack', () => {
     await page.close()
   })
   test('Pay now flow - Failed transaction.', async ({ playwright, browserName }) => {
-    test.skip(browserName === 'webkit', 'Need to solve a problem with navigation')
     const browser = await playwright[browserName].launch()
     const context = await browser.newContext({ storageState: `${browserName}_state.json` })
     const page = await context.newPage()
@@ -79,7 +76,6 @@ test.describe('Application UI Icon Pack', () => {
     await browser.close()
   })
   test('Pay monthly flow - Failed transaction', async ({ playwright, browserName }) => {
-    test.skip(browserName === 'webkit', 'Need to solve a problem with navigation')
     const browser = await playwright[browserName].launch()
     const context = await browser.newContext({ storageState: `${browserName}_state.json` })
     const page = await context.newPage()
@@ -95,7 +91,6 @@ test.describe('Application UI Icon Pack', () => {
     await browser.close()
   })
   test('Returning users - Pay monthly flow', async ({ browser, browserName }) => {
-    test.skip(browserName === 'webkit', 'Need to solve a problem with navigation')
     const context = await browser.newContext({ storageState: `${browserName}_state.json` })
     const page = await context.newPage()
     const iconPackPage = new IconPackPage(page)
@@ -110,7 +105,6 @@ test.describe('Application UI Icon Pack', () => {
     await page.close()
   })
   test('Returning users - Pay now flow', async ({ browser, browserName }) => {
-    test.skip(browserName === 'webkit', 'Need to solve a problem with navigation')
     const context = await browser.newContext({ storageState: `${browserName}_state.json` })
     const page = await context.newPage()
     const iconPackPage = new IconPackPage(page)
