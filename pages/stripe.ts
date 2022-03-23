@@ -1,4 +1,6 @@
 import { expect, Locator, Page } from '@playwright/test'
+import generateRandomInteger from '../utils/generateRandomNumber'
+import { SecurityModal } from './stripeSecurityModal'
 
 export class StripePage {
   readonly page: Page
@@ -8,6 +10,10 @@ export class StripePage {
   readonly cardCVCInput: Locator
   readonly cardNameInput: Locator
   readonly payButton: Locator
+  readonly cardForSuccessPayment: string
+  readonly month: number
+  readonly yearInFuture: number
+  readonly CVCNumber: number
 
   constructor(page: Page) {
     this.page = page
@@ -17,6 +23,10 @@ export class StripePage {
     this.cardExpirationDateInput = page.locator('id=cardExpiry')
     this.cardCVCInput = page.locator('id=cardCvc')
     this.payButton = page.locator('.SubmitButton')
+    this.cardForSuccessPayment = process.env.CARD_NUMBER_FOR_SUCCESS_PAYMENT
+    this.month = generateRandomInteger(1, 12)
+    this.yearInFuture = generateRandomInteger(25, 50)
+    this.CVCNumber = generateRandomInteger(100, 999)
   }
 
   async verifyOpened() {
@@ -47,4 +57,15 @@ export class StripePage {
     await expect(this.cardNameInput).toHaveValue(name)
   }
 
+  async completePayment() {
+    const securityModal = new SecurityModal(this.page)
+
+    await this.verifyOpened()
+    await this.typeCardNumber(this.cardForSuccessPayment)
+    await this.typeCardExpirationDate(this.month, this.yearInFuture)
+    await this.typeCVCNumber(this.CVCNumber)
+    await this.typeCardName('Fname Lname')
+    await this.clickPayButton()
+    await securityModal.completeAuthentication()
+  }
 }

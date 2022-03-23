@@ -5,6 +5,7 @@ export class IconPackPage {
   readonly signupButton: Locator
   readonly emailSpan: Locator
   readonly payNowButton: Locator
+  readonly payMonthlyButton: Locator
   readonly purchaseTitle: Locator
 
   constructor(page: Page) {
@@ -12,6 +13,7 @@ export class IconPackPage {
     this.signupButton = page.locator('button', { hasText: 'Sign in' })
     this.emailSpan = page.locator('.text-gray-600')
     this.payNowButton = page.locator('button', { hasText: 'Pay £220'})
+    this.payMonthlyButton = page.locator('button', { hasText: 'Pay £20/mo'})
     this.purchaseTitle = page.locator('p', { hasText: 'Your purchase is ready to be downloaded.'})
   }
 
@@ -31,6 +33,13 @@ export class IconPackPage {
     await Promise.all([
       this.page.waitForNavigation(),
       this.payNowButton.click()
+    ])
+  }
+
+  async clickPayMonthlyButton () {
+    await Promise.all([
+      this.page.waitForNavigation(),
+      this.payMonthlyButton.click()
     ])
   }
 
