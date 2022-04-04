@@ -6,6 +6,13 @@
 - run command `npm ci` to install dependencies
 - run command `npm run test` to run tests
 
+## How to run tests using docker
+
+- add the `.env` file to the root of the directory using `.env.example` as a template
+- run command `npm run build-image` to create a docker image
+- run command `npm run run-image` to open interactive docker bash
+- run command `npm run test` to run tests on the docker environment
+
 If you want to run tests in specific browser use one the following commands:
 
 `npm run webkit`

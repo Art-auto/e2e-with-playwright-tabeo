@@ -8,7 +8,9 @@
     "webkit": "npx playwright test --project=webkit",
     "firefox": "npx playwright test --project=firefox",
     "test": "npx playwright test",
-    "headed": "npx playwright test --headed"
+    "headed": "npx playwright test --headed",
+    "build-image": "docker build -t playwright .",
+    "run-image": "docker run -v $PWD:/tests -w /tests -p 9323:9323 --rm -it playwright /bin/bash"
   },
   "keywords": [],
   "author": "",
