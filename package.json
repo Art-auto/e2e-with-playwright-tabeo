@@ -3,11 +3,23 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "chromium": "npx playwright test --project=chromium",
+    "webkit": "npx playwright test --project=webkit",
+    "firefox": "npx playwright test --project=firefox",
+    "test": "npx playwright test",
+    "headed": "npx playwright test --headed",
+    "build-image": "docker build -t playwright .",
+    "run-image": "docker run -v $PWD:/tests -w /tests -p 9323:9323 --rm -it playwright /bin/bash"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.20.0"
+    "@playwright/test": "^1.20.0",
+    "mailosaur": "^8.2.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0"
   }
 }

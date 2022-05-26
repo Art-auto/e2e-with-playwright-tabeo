@@ -1,3 +1,7 @@
 node_modules/
 playwright-report/
+test-results/
 .env
+webkit_state.json
+chromium_state.json
+firefox_state.json
